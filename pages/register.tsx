@@ -48,11 +48,11 @@ export default function RegisterPage() {
             <div style={{ fontSize: "48px" }}>📧</div>
             <Title order={2} ta="center">Check your email</Title>
             <Text c="dimmed" ta="center">
-              We've sent a verification link to your email address. Please check your inbox and click the link to verify your account.
+              We&apos;ve sent a verification link to your email address. Please check your inbox and click the link to verify your account.
             </Text>
             <Alert color="blue" w="100%">
               <Text size="sm">
-                Didn't receive the email? Check your spam folder or contact support.
+                Didn&apos;t receive the email? Check your spam folder or contact support.
               </Text>
             </Alert>
             <Button component={Link} href="/login" variant="default" mt="md">

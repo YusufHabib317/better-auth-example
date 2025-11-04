@@ -49,7 +49,7 @@ export default function VerifyEmailPage() {
     if (router.isReady) {
       verifyEmail();
     }
-  }, [router.isReady, router.query.token]);
+  }, [router.isReady, router.query.token, router]);
 
   return (
     <Container size="sm" mt={100}>
