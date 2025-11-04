@@ -91,7 +91,7 @@ export default function LoginPage() {
               Log in
             </Button>
             <Anchor component={Link} href="/register" size="sm" mt="xs">
-              Don't have an account? Create one
+              Don&apos;t have an account? Create one
             </Anchor>
           </Stack>
         </form>
