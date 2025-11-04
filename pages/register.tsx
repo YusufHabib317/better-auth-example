@@ -11,6 +11,7 @@ import {
   Anchor,
   Alert,
   Group,
+  Text,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { registerSchema, type RegisterInput } from "../lib/validation/auth";
@@ -20,6 +21,7 @@ export default function RegisterPage() {
   const router = useRouter();
   const [globalError, setGlobalError] = useState<string>("");
   const [pending, setPending] = useState(false);
+  const [showVerificationMessage, setShowVerificationMessage] = useState(false);
 
   const form = useForm<RegisterInput>({
     initialValues: {
@@ -37,6 +39,30 @@ export default function RegisterPage() {
       return out;
     },
   });
+
+  if (showVerificationMessage) {
+    return (
+      <Group justify="center" mt={50}>
+        <Paper withBorder p="lg" radius="md" maw={420} w="100%">
+          <Stack align="center" gap="md">
+            <div style={{ fontSize: "48px" }}>📧</div>
+            <Title order={2} ta="center">Check your email</Title>
+            <Text c="dimmed" ta="center">
+              We've sent a verification link to your email address. Please check your inbox and click the link to verify your account.
+            </Text>
+            <Alert color="blue" w="100%">
+              <Text size="sm">
+                Didn't receive the email? Check your spam folder or contact support.
+              </Text>
+            </Alert>
+            <Button component={Link} href="/login" variant="default" mt="md">
+              Go to Login
+            </Button>
+          </Stack>
+        </Paper>
+      </Group>
+    );
+  }
 
   return (
     <Group justify="center" mt={50}>
@@ -62,7 +88,7 @@ export default function RegisterPage() {
                     setGlobalError(ctx.error?.message ?? "Registration failed");
                   },
                   onSuccess: () => {
-                    router.push("/");
+                    setShowVerificationMessage(true);
                   },
                   onRequest: () => setPending(true),
                 }
