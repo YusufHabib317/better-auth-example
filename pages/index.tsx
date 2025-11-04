@@ -1,14 +1,21 @@
 import { Title, Stack, Anchor, Card, Avatar, Text, Group, Loader, Alert, Button } from "@mantine/core";
 import Link from "next/link";
-import { useSession } from "../lib/auth-client";
+import { useRouter } from "next/router";
+import { useSession, signOut } from "../lib/auth-client";
 
 function User() {
+    const router = useRouter();
     const {
         data: session,
         isPending,
-        error, 
+        error,
         refetch
     } = useSession();
+
+    const handleLogout = async () => {
+        await signOut();
+        router.push("/login");
+    };
 
     if (isPending) {
         return (
@@ -45,21 +52,31 @@ function User() {
     const user = session.user;
 
     return (
-        <Card withBorder padding="lg" radius="md" maw={400} w="100%">
-            <Group>
-                <Avatar src={user.image} size="lg" radius="xl" />
-                <div>
-                    <Text size="lg" fw={500}>{user.name}</Text>
-                    <Text size="sm" c="dimmed">{user.email}</Text>
-                    <Text size="xs" c="dimmed">
-                        Email verified: {user.emailVerified ? "Yes" : "No"}
-                    </Text>
-                    <Text size="xs" c="dimmed">
-                        Member since: {new Date(user.createdAt).toLocaleDateString()}
-                    </Text>
-                </div>
-            </Group>
-        </Card>
+        <Stack gap="md" align="center">
+            <Card withBorder padding="lg" radius="md" maw={400} w="100%">
+                <Group>
+                    <Avatar src={user.image} size="lg" radius="xl" />
+                    <div>
+                        <Text size="lg" fw={500}>{user.name}</Text>
+                        <Text size="sm" c="dimmed">{user.email}</Text>
+                        <Text size="xs" c="dimmed">
+                            Email verified: {user.emailVerified ? "Yes" : "No"}
+                        </Text>
+                        <Text size="xs" c="dimmed">
+                            Member since: {new Date(user.createdAt).toLocaleDateString()}
+                        </Text>
+                    </div>
+                </Group>
+            </Card>
+            <Button
+                onClick={handleLogout}
+                variant="light"
+                color="red"
+                size="md"
+            >
+                Log Out
+            </Button>
+        </Stack>
     );
 }
 
